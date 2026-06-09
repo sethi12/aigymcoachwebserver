@@ -190,13 +190,15 @@ const getMuscleGroups =
       bodyPartId,
       muscleGroupId,
       exerciseName,
+      movementPattern,
     } = req.body;
 
     if (
       !gymDocId ||
       !bodyPartId ||
       !muscleGroupId ||
-      !exerciseName
+      !exerciseName ||
+      !movementPattern
     ) {
       return res.status(400).json({
         success: false,
@@ -238,7 +240,7 @@ const getMuscleGroups =
     await exerciseRef.set({
       exerciseid: exerciseRef.id,
       exerciseName,
-
+      movementPattern,
       bodyPartId,
       muscleGroupId,
 
@@ -252,6 +254,7 @@ const getMuscleGroups =
       success: true,
       message: "Exercise Added Successfully",
       exerciseid: exerciseRef.id,
+      movementPattern,
       videoUrl,
     });
   } catch (error) {
