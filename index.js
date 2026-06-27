@@ -4,6 +4,10 @@ const cors = require("cors");
 const authroutes = require("./routes/authRoutes");
 const memberRoutes = require("./routes/memberRoutes");
 const exerciseRoutes =require("./routes/exerciseRoutes");
+const dietRoutes = require("./routes/dietRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
+const notificationScheduler = require("./routes/notificationScheduler");
+
 const app = express();
 
 app.use(cors());
@@ -34,12 +38,23 @@ app.use(
   "/api/exercise",
   exerciseRoutes
 );
+app.use("/api/diets", dietRoutes);
+app.use("/api/notifications", notificationRoutes);
+app.use("/api/notifications", notificationScheduler);
 app.get("/", (req, res) => {
   res.send("Backend Running");
 });
 
 const PORT = process.env.PORT || 8000;
+// const cron = require("node-cron");
+// const { checkMeals } = require("./services/mealScheduler");
 
+
+
+// cron.schedule("* * * * *", async () => {
+//   console.log("Checking meals...");
+//   await checkMeals();
+// });
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });

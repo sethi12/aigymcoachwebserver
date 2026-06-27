@@ -54,5 +54,54 @@ router.post("/login", async (req, res) => {
     });
   }
 });
+/* ===========================
+   Gym Member Login
+=========================== */
+router.post("/login-member", async (req, res) => {
+  try {
+    const { gymid, userid, password } = req.body;
+
+    if (!gymid || !userid || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Gym ID, User ID and Password are required",
+      });
+    }
+
+    const snapshot = await db
+      .collection("gyms")
+      .doc(gymid)
+      .collection("gymmembers")
+      .where("userid", "==", userid)
+      .where("password", "==", password)
+      .limit(1)
+      .get();
+
+    if (snapshot.empty) {
+      return res.status(401).json({
+        success: false,
+        message: "Invalid User ID or Password",
+      });
+    }
+
+    const memberDoc = snapshot.docs[0];
+
+    return res.status(200).json({
+      success: true,
+      message: "Login Successful",
+      member: {
+        docId: memberDoc.id,
+        ...memberDoc.data(),
+      },
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+});
 
 module.exports = router;
