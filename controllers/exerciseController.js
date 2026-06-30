@@ -191,6 +191,7 @@ const getMuscleGroups =
       muscleGroupId,
       exerciseName,
       movementPattern,
+      gender
     } = req.body;
 
     if (
@@ -198,7 +199,8 @@ const getMuscleGroups =
       !bodyPartId ||
       !muscleGroupId ||
       !exerciseName ||
-      !movementPattern
+      !movementPattern ||
+      !gender
     ) {
       return res.status(400).json({
         success: false,
@@ -243,7 +245,7 @@ const getMuscleGroups =
       movementPattern,
       bodyPartId,
       muscleGroupId,
-
+      gender,
       videoUrl,
       videoPath: fileName,
 
