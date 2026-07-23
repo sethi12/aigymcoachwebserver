@@ -329,7 +329,7 @@ const { normalizeFoodName } = require("./foodnormailzer");
 
 const {
     researchNutrition
-} = require("./nutritionResearchService");
+} = require("./nutritionresearchservice");
 
 const {
     buildConsensus
