@@ -8,7 +8,7 @@ const dietRoutes = require("./routes/dietroutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const notificationScheduler = require("./routes/notificationScheduler");
 const workoutRoutes = require("./routes/workoutRoutes");
-
+const mealRoutes = require("./routes/mealRoutes");
 const app = express();
 
 app.use(cors());
@@ -43,6 +43,7 @@ app.use("/api/diets", dietRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/notifications", notificationScheduler);
 app.use("/api/workouts", workoutRoutes);
+app.use("/api/meal", mealRoutes);
 app.get("/", (req, res) => {
   res.send("Backend Running");
 });
