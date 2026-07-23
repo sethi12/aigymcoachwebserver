@@ -1,5 +1,6 @@
 const { bucket } = require("../config/firebase");
 const { analyzeMealImage } = require("../services/groqVisionService");
+const { getMealNutrition } = require("../services/nutritionService");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 
@@ -54,16 +55,22 @@ const uploadMealImage = async (req, res) => {
         console.log("Image Uploaded:", imageUrl);
 
         // Analyze image using Groq Vision
-        const visionResult = await analyzeMealImage(imageUrl);
+       const visionResult = await analyzeMealImage(imageUrl);
 
-        return res.status(200).json({
-          success: true,
-          message: "Meal analyzed successfully.",
-          imageUrl,
-          fileName,
-          foods: visionResult.foods,
-        });
+const nutritionResult = await getMealNutrition(
+    visionResult.foods
+);
 
+return res.status(200).json({
+    success: true,
+    message: "Meal analyzed successfully.",
+    imageUrl,
+    fileName,
+
+    detectedFoods: visionResult.foods,
+
+    nutrition: nutritionResult
+});
       } catch (err) {
 
         console.error("========== GROQ ERROR ==========");
