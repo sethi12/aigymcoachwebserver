@@ -1,6 +1,6 @@
 const { bucket } = require("../config/firebase");
 const { analyzeMealImage } = require("../services/groqVisionService");
-const { getMealNutrition } = require("../services/nutritionService");
+const { getMealNutrition } = require("../services/nutritionservice");
 const { v4: uuidv4 } = require("uuid");
 const path = require("path");
 
